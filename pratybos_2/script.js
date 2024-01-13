@@ -42,3 +42,28 @@ class Dog extends Animal {
 const suo = new Dog("sargis", "6", "juodos", "8");
 
 suo.getDogInfo();
+
+// 4.
+
+class Skaiciuokle {
+  constructor(number) {
+    this.number = number;
+  }
+
+  displayNumber() {
+    console.log(`the number is: ${this.number}`);
+  }
+
+  multiplyByFive() {
+    console.log(`multiplying the number ${this.number} by 5...`);
+    this.number *= 5;
+  }
+}
+
+const someObject = new Skaiciuokle(2);
+
+someObject.displayNumber();
+
+someObject.multiplyByFive();
+
+someObject.displayNumber();
