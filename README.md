@@ -1,3 +1,3 @@
 3 pratybose:
 - truksta dropdown su visomis knygomis.
-- pataisyti "required" neveikia, kad nereiketu if'o JS'e.
+- pataisyti "required" neveikima bootstrape, kad nereiketu if'o JS'e.
