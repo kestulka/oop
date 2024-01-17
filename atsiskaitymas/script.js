@@ -1,115 +1,149 @@
 class Animal {
-    constructor(name, age, family, legs){
-        this.name = name;
-        this.age = age;
-        this.family = family;
-        this.legs = legs;
-    }
+  constructor(name, age, family, legs) {
+    this.name = name;
+    this.age = age;
+    this.family = family;
+    this.legs = legs;
+  }
 }
 
-class Cat extends Animal{
-    constructor(name, age, family, legs, cutenessLevel){
-        super(name, age, family, legs);
-        this.cutenessLevel = cutenessLevel;
-    }
-
-    getCatInfo(){
-        console.log(`your cat name is ${this.name}`)
-    }
+class Cat extends Animal {
+  constructor(name, age, family, legs, cutenessLevel) {
+    super(name, age, family, legs);
+    this.cutenessLevel = cutenessLevel;
+  }
 }
 
-class Dog extends Animal{
-    constructor(name, age, family, legs, annoyanceLevel){
-        super(name, age, family, legs);
-        this.annoyanceLevel = annoyanceLevel;
-    }
+class Dog extends Animal {
+  constructor(name, age, family, legs, annoyanceLevel) {
+    super(name, age, family, legs);
+    this.annoyanceLevel = annoyanceLevel;
+  }
 }
 
-class Rabbit extends Animal{
-    constructor(name, age, family, legs, poopOnBedChance){
-        super(name, age, family, legs);
-        this.poopOnBedChance = poopOnBedChance
-    }
+class Rabbit extends Animal {
+  constructor(name, age, family, legs, poopOnBedChance) {
+    super(name, age, family, legs);
+    this.poopOnBedChance = poopOnBedChance;
+  }
 }
 
-const catBtn = document.createElement('button')
-catBtn.innerText = "Cat";
-catBtn.setAttribute("id", "catButton")
-document.body.append(catBtn)
+const catBtn = createButton("Cat");
+const dogBtn = createButton("Dog");
+const rabbitBtn = createButton("Rabbit");
 
-const dogBtn = document.createElement('button')
-dogBtn.innerText = "Dog";
-dogBtn.setAttribute("id", "dogButton")
-document.body.append(dogBtn)
+const buttonContainer = createButtonContainer();
+const formContainer = createFormContainer();
+const cardContainer = createCardContainer();
 
-const rabbitBtn = document.createElement('button')
-rabbitBtn.innerText = "Rabbit";
-rabbitBtn.setAttribute("id", "rabbitButton")
-document.body.append(rabbitBtn)
+buttonContainer.append(catBtn);
+buttonContainer.append(dogBtn);
+buttonContainer.append(rabbitBtn);
 
-const formosDivas = document.createElement("div")
-document.body.append(formosDivas)
-const formContainer = document.querySelector("div")
-formContainer.setAttribute("id", "formContainer")
+function createButton(animalType) {
+  const button = document.createElement("button");
+  button.innerText = animalType;
+  button.setAttribute("id", `${animalType.toLowerCase()}Button`);
+  document.body.append(button);
+  return button;
+}
 
+function createButtonContainer() {
+  const buttonDivas = document.createElement("div");
+  buttonDivas.setAttribute("id", "buttonContainer");
+  document.body.append(buttonDivas);
+  return buttonDivas;
+}
 
+function createFormContainer() {
+  const formDivas = document.createElement("div");
+  document.body.append(formDivas);
+  formDivas.setAttribute("id", "formContainer");
+  return formDivas;
+}
 
+function createCardContainer() {
+  const cardDivas = document.createElement("div");
+  document.body.append(cardDivas);
+  cardDivas.setAttribute("id", "cardContainer");
+  return cardDivas;
+}
 
-function createForm(animalType) {
+let form = null;
 
+function createInputForm(animalType) {
+  if (form) {
+    form.remove();
+  }
 
+  form = document.createElement("form");
 
-    let form = document.createElement('form');
-
-    // inner html
-    let formFields = `
-      <input type="text" name="name" placeholder="Name">
-      <input type="number" name="age" placeholder="Age">
-      <input type="number" name="legs" placeholder="Legs">
-      <input type="text" name="family" placeholder="Family">
+  let formFields = `
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="number" name="age" placeholder="Age" required>
+      <input type="number" name="legs" placeholder="Legs" required>
+      <input type="text" name="family" placeholder="Family" required>
     `;
 
-    // prideti inputus pagal gyvuno rusi
-    if (animalType === 'Cat') {
-        formFields += `<input type="number" name="cutenessLevel" placeholder="Cuteness Level">`;
-    } else if (animalType === 'Dog') {
-        formFields += `<input type="number" name="annoyanceLevel" placeholder="Annoyance Level">`;
-    } else if (animalType === 'Rabbit') {
-        formFields += `<input type="number" name="poopOnBedChance" placeholder="Poop on Bed Chance">`;
-    }
+  if (animalType === "Cat") {
+    formFields += `<input type="number" name="cutenessLevel" placeholder="Cuteness Level">`;
+  } else if (animalType === "Dog") {
+    formFields += `<input type="number" name="annoyanceLevel" placeholder="Annoyance Level">`;
+  } else if (animalType === "Rabbit") {
+    formFields += `<input type="number" name="poopOnBedChance" placeholder="Poop on Bed Chance">`;
+  }
 
-    formFields += `<input type="submit" id="submitButton" value="Submit">`;
+  formFields += `<input type="submit" id="submitButton" value="Submit">`;
 
-    form.innerHTML = formFields;
+  form.innerHTML = formFields;
+  formContainer.appendChild(form);
+  form.dataset.animalType = animalType;
 
-    document.body.appendChild(form);
+  // SUBMIT EVENT LISTENER
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    createCard(animalType);
+  });
 }
 
-// formos kurimo testavimas
+function createCard(animalType) {
+  const form = document.querySelector("form");
 
-// createForm('Cat');
-// createForm('Dog');
-// createForm('Rabbit');
-  
-const catButton = document.getElementById("catButton")
-catButton.addEventListener("click", (event)=>{
-event.preventDefault()
-    if(createForm){
-        // createForm.remove()
-        console.log(createForm)
-    } else{
-    createForm('Cat')
-    }
-})
-const dogButton = document.getElementById("dogButton")
-dogButton.addEventListener("click", (event)=>{
-    event.preventDefault()
-    createForm('Dog')
-})
-const rabbitButton = document.getElementById("rabbitButton")
-rabbitButton.addEventListener("click", (event)=>{
-    event.preventDefault()
-    createForm('Rabbit')
-})
+  const nameValue = form.querySelector('[name="name"]').value;
+  const ageValue = form.querySelector('[name="age"]').value;
+  const legsValue = form.querySelector('[name="legs"]').value;
+  const familyValue = form.querySelector('[name="family"]').value;
 
-const submitButton = document.getElementById("")
+  let specificInfo = "";
+  if (animalType === "Cat") {
+    specificInfo = `Cuteness Level: ${
+      form.querySelector('[name="cutenessLevel"]').value
+    }`;
+  } else if (animalType === "Dog") {
+    specificInfo = `Annoyance Level: ${
+      form.querySelector('[name="annoyanceLevel"]').value
+    }`;
+  } else if (animalType === "Rabbit") {
+    specificInfo = `Poop on Bed Chance: ${
+      form.querySelector('[name="poopOnBedChance"]').value
+    }`;
+  }
+
+  const card = document.createElement("div");
+  card.innerHTML = `
+    <div id="card">
+      <h2>${animalType}</h2>
+      <p>Name: ${nameValue}</p>
+      <p>Age: ${ageValue}</p>
+      <p>Legs: ${legsValue}</p>
+      <p>Family: ${familyValue}</p>
+      <p>${specificInfo}</p>
+    </div>
+  `;
+
+  cardContainer.appendChild(card);
+}
+
+catBtn.addEventListener("click", () => createInputForm("Cat"));
+dogBtn.addEventListener("click", () => createInputForm("Dog"));
+rabbitBtn.addEventListener("click", () => createInputForm("Rabbit"));
