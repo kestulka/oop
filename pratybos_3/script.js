@@ -1,16 +1,18 @@
 // #1 ir #2
 
+const readerArray = []
 // Apsirasoma funkcija Reader, kuri apraso nauja klase:
-function Reader(vardas, pavarde, korteles_nr) {
+class Reader {
+  constructor(vardas, pavarde, korteles_nr){
   // savybes nustatomos pagal perduotus parametrus:
   this.vardas = vardas;
   this.pavarde = pavarde;
   this.korteles_nr = korteles_nr;
-  this.paimta_knyga = []; // tuscia kyngu saraso savybe:
-
+  this.paimta_knyga = []; // tuscia knygu saraso savybe:
+  }
   // #3
 
-  this.printInfo = function () {
+  printInfo() {
     console.log(
       `Vardas: ${this.vardas}, Pavarde: ${this.pavarde}, Korteles_numeris: ${this.korteles_nr}`,
     );
@@ -19,27 +21,27 @@ function Reader(vardas, pavarde, korteles_nr) {
 
   // #4
 
-  this.paimtos_knygos = function (knyga) {
+  paimtosKnygos(knyga) {
     this.paimta_knyga.push(knyga);
   };
 }
 
 // #5
 
-let reader1 = new Reader("jonas", "jonauskas", "1");
-reader1.paimtos_knygos("pasaulinis karas 2");
-reader1.paimtos_knygos("meile ispanijoje");
+let Reader1 = new Reader("jonas", "jonauskas", "1");
+Reader1.paimtosKnygos("pasaulinis karas 2");
+Reader1.paimtosKnygos("meile ispanijoje");
 
-let reader2 = new Reader("Petras", "Petrauskas", "2");
-reader2.paimtos_knygos("american dream");
-reader2.paimtos_knygos("desert island");
+let Reader2 = new Reader("Petras", "Petrauskas", "2");
+Reader2.paimtosKnygos("american dream");
+Reader2.paimtosKnygos("desert island");
 
-reader1.printInfo();
-reader2.printInfo();
+Reader1.printInfo();
+Reader2.printInfo();
 
 // #6 ir #7
 
-function createReaderTable(reader) {
+function createReaderTable(Reader) {
   // lenteles konteinerio logika:
   let tableContainer = document.getElementById("tableContainer");
   if (!tableContainer) {
@@ -61,21 +63,29 @@ function createReaderTable(reader) {
     tableContainer.appendChild(table);
   }
 
-  // sukuriamas rowData objektas, kuris paima informacija is "reader" objekto
+  // sukuriamas rowData objektas, kuris paima informacija is "Reader" objekto
   const rowData = {
-    name: reader.vardas,
-    last_name: reader.pavarde,
-    card_number: reader.korteles_nr,
-    books: reader.paimta_knyga.join(", "),
+    name: Reader.vardas,
+    last_name: Reader.pavarde,
+    card_number: Reader.korteles_nr,
+    books: Reader.paimta_knyga
   };
 
   const row = document.createElement("tr");
-  for (const key in rowData) {
-    const cell = document.createElement("td");
-    const cellText = document.createTextNode(`${key}: ${rowData[key]}`); // pvz: 66 eilute: {key} yra "name", {rowData[key]} yra reader.vardas
+
+  Object.entries(rowData).forEach(([key, value])=>{
+    const cell = document.createElement("td")
+    const cellText = document.createTextNode(`${key}: ${value}`)
     cell.appendChild(cellText);
     row.appendChild(cell);
-  }
+  })
+  
+  // for (const key in rowData) {
+  //   const cell = document.createElement("td");
+  //   const cellText = document.createTextNode(`${key}: ${rowData[key]}`);
+  //   cell.appendChild(cellText);
+  //   row.appendChild(cell);
+  // }
 
   // delete mygtukas
   const deleteButton = document.createElement("button");
@@ -133,8 +143,25 @@ submitBtn.addEventListener("click", (event) => {
     cardNumberInput.value,
   );
 
-  newReader.paimtos_knygos(bookNameInput.value); // pridedama knyga prie skaitytojo
+  const doesReaderExist = readerArray.find((reader) => reader.korteles_nr === newReader.korteles_nr)
+  if (doesReaderExist){
+    doesReaderExist.paimtosKnygos(bookNameInput.value)
+  } else {
+    newReader.paimtosKnygos(bookNameInput.value)
+    readerArray.push(newReader)
+  }
+  console.log(readerArray)
+
+  // readerArray.forEach((el)=>{
+  //   if(cardNumber === cardNumberInput){
+  //     newReader.paimtosKnygos(bookNameInput.value)
+  //   } else{
+  //     alert("ko tu neveiki")
+  //   }
+  // })
 
   createReaderTable(newReader);
   clearInputFields();
 });
+
+console.log(readerArray)
