@@ -27,6 +27,15 @@ div#cardContainer {
   justify-content: center;
 }
 
+div#card {
+  box-sizing: border-box;
+  border: 4px solid black;
+  padding: 1em;
+  margin: 1em;
+  width: 250px;
+  height: 350px;
+}
+
 input {
   font-size: large;
   display: block;
@@ -72,13 +81,4 @@ p {
   font-weight: 600;
   font-style: italic;
   color: white;
-}
-
-div#card {
-  box-sizing: border-box;
-  border: 4px solid black;
-  padding: 1em;
-  margin: 1em;
-  width: 250px;
-  height: 350px;
 }
