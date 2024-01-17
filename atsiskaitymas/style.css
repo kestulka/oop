@@ -1,0 +1,39 @@
+/* Add this CSS to your stylesheet or in a <style> tag in your HTML file */
+
+body{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+form {
+    width: 300px; /* Set the width of the form */
+    margin: 20px auto; /* Center the form on the page */
+}
+
+input {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 3px solid black;
+}
+
+input{
+    font-size: large;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50; /* Green submit button color */
+    color: white;
+    cursor: pointer;
+}
+
+button{
+    box-sizing: border-box;
+    height: 5em;
+    width: 10em;
+    justify-content: center;
+}
