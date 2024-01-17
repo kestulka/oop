@@ -1,3 +1,5 @@
+// klases ir poklases
+
 class Animal {
   constructor(name, age, family, legs) {
     this.name = name;
@@ -32,6 +34,7 @@ const catBtn = createButton("Cat");
 const dogBtn = createButton("Dog");
 const rabbitBtn = createButton("Rabbit");
 
+// si seka svarbi, del html galutinio issidestymo
 const buttonContainer = createButtonContainer();
 const formContainer = createFormContainer();
 const cardContainer = createCardContainer();
@@ -40,13 +43,17 @@ buttonContainer.append(catBtn);
 buttonContainer.append(dogBtn);
 buttonContainer.append(rabbitBtn);
 
+// funkcija kurti mygtuka pagal gyvuno rusi
+
 function createButton(animalType) {
   const button = document.createElement("button");
   button.innerText = animalType;
-  button.setAttribute("id", `${animalType.toLowerCase()}Button`);
+  button.setAttribute("id", `${animalType}Button`);
   document.body.append(button);
   return button;
 }
+
+// konteineriu kurimo funkcijos
 
 function createButtonContainer() {
   const buttonDivas = document.createElement("div");
@@ -69,8 +76,10 @@ function createCardContainer() {
   return cardDivas;
 }
 
+// let form = document.createElement("form") - kazkodel neveike funkcijos viduje, todel naudojau taip keistai
 let form = null;
 
+// funkcija kurti inputa pagal gyvuno rusi
 function createInputForm(animalType) {
   if (form) {
     form.remove();
@@ -85,6 +94,7 @@ function createInputForm(animalType) {
       <input type="text" name="family" placeholder="Family" required>
     `;
 
+  // inner html appendas pagal gyvuno tipa(cat,dog,rabbit) input laukeliui
   if (animalType === "Cat") {
     formFields += `<input type="number" name="cutenessLevel" placeholder="Cuteness Level">`;
   } else if (animalType === "Dog") {
@@ -93,13 +103,18 @@ function createInputForm(animalType) {
     formFields += `<input type="number" name="poopOnBedChance" placeholder="Poop on Bed Chance">`;
   }
 
+  // inner html appendas submit mygtukui
   formFields += `<input type="submit" id="submitButton" value="Submit">`;
 
+  // visu appendu kombinacija ir pridejimas i html
   form.innerHTML = formFields;
+
   formContainer.appendChild(form);
+
+  // STORE THE SELECTED ANIMAL TYPE AS DATA ATTRIBUTE (nenaudotas budas)
   form.dataset.animalType = animalType;
 
-  // SUBMIT EVENT LISTENER
+  // SUBMIT EVENT LISTENER (skirtingai nei kiti event listeneriai, sis yra pacioje formoje)
   form.addEventListener("submit", function (event) {
     event.preventDefault();
     createCard(animalType);
@@ -109,12 +124,14 @@ function createInputForm(animalType) {
 function createCard(animalType) {
   const form = document.querySelector("form");
 
+  // paimamos ivestis is formos (neiprasta sintakse)
   const nameValue = form.querySelector('[name="name"]').value;
   const ageValue = form.querySelector('[name="age"]').value;
   const legsValue = form.querySelector('[name="legs"]').value;
   const familyValue = form.querySelector('[name="family"]').value;
 
   let specificInfo = "";
+
   if (animalType === "Cat") {
     specificInfo = `Cuteness Level: ${
       form.querySelector('[name="cutenessLevel"]').value
@@ -129,6 +146,7 @@ function createCard(animalType) {
     }`;
   }
 
+  // Kortos sukurimas
   const card = document.createElement("div");
   card.innerHTML = `
     <div id="card">
